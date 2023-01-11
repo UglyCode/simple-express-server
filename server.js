@@ -2,6 +2,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+var admin = require("firebase-admin");
+var fcm = require('fcm-notification');
+//var serviceAccount = require("../config/privateKey.json");
+//const certPath = admin.credential.cert(serviceAccount);
+//var FCM = new fcm(certPath);
+
 //Allow all requests from all domains & localhost
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
