@@ -4,9 +4,39 @@ var app = express();
 
 var admin = require("firebase-admin");
 var fcm = require('fcm-notification');
-//var serviceAccount = require("../config/privateKey.json");
-//const certPath = admin.credential.cert(serviceAccount);
-//var FCM = new fcm(certPath);
+var serviceAccount = require('../simple-express-server/configs/hyperdelivery-c3b7d-da9da01e4161.json');
+const certPath = admin.credential.cert(serviceAccount);
+var FCM = new fcm(certPath);
+
+sendPushNotification= (fcm_token, title, body) => {
+
+    try{
+        let message = {
+            android: {
+                notification: {
+                    title: title,
+                    body: body,
+                },
+            },
+            token: fcm_token
+        };
+
+        FCM.send(message, function(err, resp) {
+            if(err){
+                throw err;
+            }else{
+                console.log('Successfully sent notification');
+            }
+        });
+
+    }catch(err){
+        throw err;
+        }
+
+    }
+
+    var fcmT = "fcwFykjJRBWPyonihExHmI:APA91bHsgWm_mUksKzg4ykM74WItMXm7z5ZgzGYKkyBR8luUwIjxDWPitnfrTYHMinIM4j9My1AnfynaakKh_phaOBkycY2Uy_ljjyAdmksYjCmP7VlKdTQvuVn50CsNbH7I4C45iL3v";
+    sendPushNotification(fcmT,'GOVNO', 'huy pizda volosa');
 
 //Allow all requests from all domains & localhost
 app.all('/*', function(req, res, next) {
