@@ -30,13 +30,11 @@ sendPushNotification= (fcm_token, title, body) => {
         });
 
     }catch(err){
+        console.log(err);
         throw err;
         }
 
-    }
-
-    var fcmT = "fcwFykjJRBWPyonihExHmI:APA91bHsgWm_mUksKzg4ykM74WItMXm7z5ZgzGYKkyBR8luUwIjxDWPitnfrTYHMinIM4j9My1AnfynaakKh_phaOBkycY2Uy_ljjyAdmksYjCmP7VlKdTQvuVn50CsNbH7I4C45iL3v";
-    sendPushNotification(fcmT,'GOVNO', 'huy pizda volosa');
+}
 
 //Allow all requests from all domains & localhost
 app.all('/*', function(req, res, next) {
@@ -74,11 +72,10 @@ app.get('/ingredients', function(req, res) {
     res.send(ingredients);
 });
 
-app.post('/ingredients', function(req, res) {
-    var ingredient = req.body;
-    console.log(req.body);
-    ingredients.push(ingredient);
-    res.status(200).send("Successfully posted ingredient");
+app.post('/notify', function(req, res) {
+    var tokenFCM = req.body;
+    sendPushNotification(tokenFCM,'ВНИМАНИЕ. Обновление плана!', 'Проверьте маршрут и адреса точек.');
+    res.status(200).send("Successfully push message to device");
 });
 
 app.listen(6069);
