@@ -66,16 +66,16 @@ var ingredients = [
     }
 ];
 
-
-app.get('/ingredients', function(req, res) {
+app.get('/test', function(req, res) {
     console.log("GET From SERVER");
     res.send(ingredients);
 });
 
 app.post('/notify', function(req, res) {
-    var tokenFCM = req.body;
-    sendPushNotification(tokenFCM,'ВНИМАНИЕ. Обновление плана!', 'Проверьте маршрут и адреса точек.');
+    var tokenFCM = req.body.token;
+    console.log('token: ' + tokenFCM);
+    sendPushNotification(tokenFCM,'ВНИМАНИЕ. План обновлен!', 'Проверьте маршрут и адреса точек.');
     res.status(200).send("Successfully push message to device");
 });
 
-app.listen(6069);
+app.listen(6969);
